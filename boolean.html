@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2>Calculadora de IMC</h2>
+        <label for="weight">Peso (kg):</label>
+        <input type="number" id="weight"><br><br>
+        <label for="height">Altura (cm):</label>
+        <input type="number" id="height"><br><br>
+        <button onclick="calculateBMI()">Calcular IMC</button><br><br>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            var weight = parseFloat(document.getElementById('weight').value);
+            var height = parseFloat(document.getElementById('height').value) / 100; // Convertir altura a metros
+            var bmi = weight / (height * height);
+
+            var resultDiv = document.getElementById('result');
+
+            if (isNaN(bmi)) {
+                resultDiv.innerHTML = 'Por favor, introduce un peso y una altura válidos.';
+                return;
+            }
+
+            var underweight = bmi < 18.5;
+            var normalWeight = bmi >= 18.5 && bmi < 25;
+            var overweight = bmi >= 25 && bmi < 30;
+            var obesity = bmi >= 30;
+
+            var resultMessage = 'Tu IMC es ' + bmi.toFixed(2) + '. ';
+
+            if (underweight) {
+                resultMessage += 'Estás por debajo del peso saludable.';
+            } else if (normalWeight) {
+                resultMessage += 'Estás en un rango de peso saludable.';
+            } else if (overweight) {
+                resultMessage += 'Tienes sobrepeso.';
+            } else if (obesity) {
+                resultMessage += 'Tienes obesidad.';
+            }
+
+            resultDiv.innerHTML = resultMessage;
+        }
+    </script>
+</body>
+</html>
